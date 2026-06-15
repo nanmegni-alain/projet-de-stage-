@@ -1056,6 +1056,58 @@ src/
 
 C'est l'architecture TypeScript/Fastify que l'on retrouve le plus souvent dans les projets réels.
 
+# Code TypeScript de création de la base
+// db.ts
+import Database from "better-sqlite3";
 
-# comment creer une base de données : 
+// 1. Connexion / création du fichier de base
+const db = new Database("app.db");
+
+// 2. Création de la table users
+db.exec(`
+CREATE TABLE IF NOT EXISTS users (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name TEXT NOT NULL,
+    email TEXT UNIQUE NOT NULL,
+    password TEXT NOT NULL,
+    created_at TEXT NOT NULL
+);
+`);
+
+console.log("Base de données et table créées avec succès.");
+
+# 4. Ajout d’un utilisateur (INSERT)
+import Database from "better-sqlite3";
+
+const db = new Database("app.db");
+
+const insert = db.prepare(`
+INSERT INTO users (name, email, password, created_at)
+VALUES (?, ?, ?, ?)
+`);
+
+insert.run(
+    "Alain",
+    "alain@mail.com",
+    "1234",
+    new Date().toISOString()
+);
+
+console.log("Utilisateur ajouté.");
+
+# Lecture des utilisateurs (SELECT)
+import Database from "better-sqlite3";
+
+const db = new Database("app.db");
+
+const users = db.prepare("SELECT * FROM users").all();
+
+console.log(users);
+🧪 6. Simulation du fonctionnement interne
+
+Quand tu exécutes ton fichier :
+
+Étape 1 : ouverture
+SQLite → ouverture app.db
+(si fichier absent → création automatique)
 
