@@ -1055,3 +1055,7 @@ src/
 └── app.ts
 
 C'est l'architecture TypeScript/Fastify que l'on retrouve le plus souvent dans les projets réels.
+
+
+# comment creer une base de données : 
+
